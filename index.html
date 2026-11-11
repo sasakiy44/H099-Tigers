@@ -1,12 +1,231 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ページタイトル</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="学生作品『タイガース応援アプリ』の紹介ページです。試合日程や応援メッセージを楽しめる架空のアプリを紹介します。">
+  <title>タイガース応援アプリ | 学生作品紹介</title>
+  <style>
+    :root {
+      --navy: #14213d;
+      --yellow: #f5c542;
+      --cream: #fff9e9;
+      --ink: #202536;
+      --muted: #687084;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f5f6f9;
+      font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+      line-height: 1.7;
+    }
+    a { color: inherit; }
+    .site-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 15px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .brand { font-weight: 800; letter-spacing: .04em; }
+    .brand span { color: var(--yellow); }
+    nav { display: flex; gap: 22px; flex-wrap: wrap; }
+    nav a { text-decoration: none; font-size: .92rem; opacity: .9; }
+    nav a:hover { color: var(--yellow); }
+    .hero {
+      min-height: 470px;
+      padding: 76px 6%;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 82% 35%, rgba(245,197,66,.24) 0 12%, transparent 12.5%),
+        linear-gradient(120deg, rgba(20,33,61,.98), rgba(31,48,82,.88));
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: center;
+      gap: 45px;
+      overflow: hidden;
+    }
+    .eyebrow { color: var(--yellow); font-weight: 800; letter-spacing: .14em; font-size: .82rem; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1.13; margin: 14px 0 20px; }
+    h1 span { color: var(--yellow); }
+    .hero p { max-width: 600px; color: #e5e9f2; font-size: 1.08rem; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .button {
+      display: inline-block; padding: 12px 22px; border-radius: 999px;
+      text-decoration: none; font-weight: 800; transition: transform .2s, background .2s;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { color: var(--navy); background: var(--yellow); }
+    .button.secondary { border: 1px solid #aeb8ca; color: var(--white); }
+    .app-art { display: flex; justify-content: center; align-items: center; }
+    .phone {
+      width: 230px; padding: 12px; border: 7px solid #101827; border-radius: 34px;
+      background: #fff; color: var(--navy); transform: rotate(5deg);
+      box-shadow: 0 25px 55px rgba(0,0,0,.35);
+    }
+    .phone-top { height: 12px; width: 70px; border-radius: 10px; background: #d9deea; margin: 0 auto 15px; }
+    .phone-banner { background: var(--navy); color: var(--yellow); padding: 20px 12px; border-radius: 15px; text-align: center; font-weight: 900; }
+    .phone-banner strong { display: block; font-size: 1.8rem; }
+    .phone-card { margin-top: 12px; padding: 12px; border-radius: 12px; background: var(--cream); font-size: .8rem; }
+    .phone-card b { display: block; font-size: .95rem; }
+    .phone-score { display: flex; justify-content: space-around; align-items: center; font-size: 1.1rem; font-weight: 900; padding: 14px 0 4px; }
+    main { max-width: 1100px; margin: auto; padding: 65px 24px; }
+    section { scroll-margin-top: 25px; }
+    .section-heading { text-align: center; margin-bottom: 35px; }
+    .section-heading .eyebrow { color: #9a7410; }
+    h2 { color: var(--navy); font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 5px 0 8px; }
+    .section-heading p { color: var(--muted); margin: 0; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .feature, .about-card, .detail-card {
+      background: var(--white); border-radius: 18px; padding: 25px;
+      box-shadow: 0 8px 25px rgba(20,33,61,.06);
+    }
+    .feature-icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 15px; background: var(--cream); font-size: 1.6rem; }
+    .feature h3, .detail-card h3 { color: var(--navy); margin: 15px 0 7px; }
+    .feature p, .detail-card p { color: var(--muted); margin: 0; font-size: .95rem; }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; margin-top: 85px; }
+    .about-card { background: var(--navy); color: var(--white); }
+    .about-card h2 { color: var(--white); }
+    .about-card p { color: #dce2ef; }
+    .tag { display: inline-block; background: rgba(245,197,66,.16); color: var(--yellow); padding: 5px 11px; border-radius: 99px; font-size: .8rem; font-weight: 700; margin: 4px 4px 0 0; }
+    .details { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 85px; }
+    .detail-card h3 { margin-top: 0; }
+    .detail-card ul { padding-left: 1.2em; margin-bottom: 0; }
+    .detail-card li { margin: 5px 0; }
+    .cta { text-align: center; background: var(--yellow); border-radius: 22px; padding: 42px 20px; margin-top: 85px; }
+    .cta h2 { margin-top: 0; }
+    .cta p { margin: 0 0 20px; }
+    .cta .button { background: var(--navy); color: var(--white); }
+    footer { background: var(--navy); color: #dce2ef; text-align: center; padding: 25px 15px; font-size: .85rem; }
+    footer strong { color: var(--yellow); }
+    @media (max-width: 760px) {
+      .site-header { align-items: flex-start; flex-direction: column; }
+      nav { gap: 14px; }
+      .hero { grid-template-columns: 1fr; padding-top: 55px; text-align: center; }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .app-art { padding: 15px 0 20px; }
+      .phone { width: 205px; }
+      .features { grid-template-columns: 1fr; }
+      .about, .details { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <h1>こんにちは、世界！</h1>
-    <p>これは index.html のサンプルです。</p>
+  <header class="site-header">
+    <div class="brand">学生作品 <span>SHOWCASE</span></div>
+    <nav aria-label="メインナビゲーション">
+      <a href="#concept">コンセプト</a>
+      <a href="#features">機能紹介</a>
+      <a href="#about">制作について</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <div class="eyebrow">STUDENT PROJECT / APP DESIGN</div>
+      <h1 id="hero-title">応援を、<br><span>もっと楽しく。</span></h1>
+      <p>試合の日も、そうでない日も。タイガースを応援する気持ちをひとつにする、ファンのための応援サポートアプリです。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#features">アプリの機能を見る</a>
+        <a class="button secondary" href="#about">制作のねらい</a>
+      </div>
+    </div>
+    <div class="app-art" aria-label="アプリ画面のイメージ">
+      <div class="phone">
+        <div class="phone-top"></div>
+        <div class="phone-banner">GO! TIGERS<strong>虎魂！</strong>全力応援！</div>
+        <div class="phone-card"><b>NEXT GAME</b>次の試合まであと 2日</div>
+        <div class="phone-card"><b>みんなの応援メッセージ</b>今日も最後まで応援するで！</div>
+        <div class="phone-score"><span>🐯 Tigers</span><span>VS</span><span>Rivals</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="concept">
+      <div class="section-heading">
+        <div class="eyebrow">CONCEPT</div>
+        <h2>タイガースファンをつなぐアプリ</h2>
+        <p>応援に必要な情報と、ファン同士の一体感をひとつに。</p>
+      </div>
+      <div class="about-card">
+        <h2>「応援する時間」を、もっと身近に。</h2>
+        <p>試合日程を確認したり、応援メッセージを投稿したり。球場に行けない日でも、アプリを開けばチームを応援する仲間の熱気を感じられます。初めて応援する人にも使いやすい、シンプルな画面を目指しました。</p>
+        <span class="tag">かんたん操作</span><span class="tag">応援を共有</span><span class="tag">試合情報</span>
+      </div>
+    </section>
+
+    <section id="features" style="margin-top:85px">
+      <div class="section-heading">
+        <div class="eyebrow">FEATURES</div>
+        <h2>主な機能</h2>
+        <p>応援がもっと楽しくなる、3つの機能を搭載。</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">📅</div>
+          <h3>試合日程・結果</h3>
+          <p>今後の試合予定や試合結果を一覧でチェック。応援したい試合を見逃しません。</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">📣</div>
+          <h3>応援メッセージ</h3>
+          <p>チームや選手への応援コメントを投稿。ファン同士で熱い気持ちを共有できます。</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">⭐</div>
+          <h3>推し選手リスト</h3>
+          <p>お気に入りの選手を登録して、自分だけの応援リストを作成できます。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div>
+        <div class="eyebrow">ABOUT THIS PROJECT</div>
+        <h2>学生のアイデアから生まれた、架空のアプリ。</h2>
+        <p>この作品は、スポーツ観戦をもっと楽しむ方法を考え、企画・画面設計を行った学生作品のサンプルです。使う人の立場に立ち、必要な情報を見つけやすくすることを大切にしました。</p>
+      </div>
+      <div class="detail-card">
+        <h3>作品データ</h3>
+        <ul>
+          <li><strong>作品名：</strong>タイガース応援アプリ</li>
+          <li><strong>ジャンル：</strong>スポーツ・ファン向けアプリ</li>
+          <li><strong>制作：</strong>IT系専門学校 学生作品（架空）</li>
+          <li><strong>担当：</strong>企画・UIデザイン・Web制作</li>
+          <li><strong>使用技術：</strong>HTML / CSS / JavaScript（想定）</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="details">
+      <div class="detail-card">
+        <h3>制作で工夫したポイント</h3>
+        <p>スマートフォンでの閲覧を意識したレスポンシブデザインを採用。色やアイコンで情報を整理し、初めて使う人でも直感的に内容を把握できる構成にしました。</p>
+      </div>
+      <div class="detail-card">
+        <h3>今後のアップデート案</h3>
+        <p>プッシュ通知、選手情報の詳細表示、応援メッセージへのリアクション機能など、ファン同士の交流をさらに広げる機能を検討しています。</p>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>あなたの応援が、力になる。</h2>
+      <p>今日もみんなで、熱く応援しよう！</p>
+      <a class="button" href="#hero-title">ページのトップへ</a>
+    </section>
+  </main>
+
+  <footer>
+    <strong>タイガース応援アプリ</strong> — 学生作品紹介ページ<br>
+    <small>※本ページおよびアプリの内容は架空の作品です。実在の球団・公式アプリとは関係ありません。</small>
+  </footer>
 </body>
 </html>
